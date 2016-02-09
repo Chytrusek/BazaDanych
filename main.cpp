@@ -1,9 +1,12 @@
 #include <iostream>
-
+#include "database.hpp"
+#include "databaseConsole.hpp"
 
 int main()
 {
-  int elo = 5;
-  std::cout<<elo;
-  std::cin.get();
+  database *bazaDanych;
+  bazaDanych = new databaseConsole;
+
+  bazaDanych->menu();
+  std::getchar();
 }
