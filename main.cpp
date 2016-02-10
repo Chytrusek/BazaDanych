@@ -7,6 +7,10 @@ int main()
   database *bazaDanych;
   bazaDanych = new databaseConsole;
 
-  bazaDanych->menu();
-  std::getchar();
+  while(true)
+  {
+    if (bazaDanych->menu())           //wybrano wyjscie z programu
+      break;
+  }
+
 }

@@ -7,12 +7,11 @@
 
 class databaseConsole : public database
 {
-  schoolClass klasa1A;
-
 public:
   void wyswietl();
   bool menu();
   void dodajRekord();
+  void usunRekord();
 
 };
 

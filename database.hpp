@@ -6,6 +6,8 @@
 
 class database
 {
+protected:
+  schoolClass klasa1A;
 public:
   void zapisz();
   void wczytaj();
