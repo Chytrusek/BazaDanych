@@ -34,6 +34,12 @@ void schoolClass::usunUcznia(std::string nazwisko)
       uczniowie.erase(uczniowie.begin() + i);
 }
 
+void schoolClass::usunWszystkichUczniow()
+{
+  for(unsigned int i=0;i<uczniowie.size();i++)
+    uczniowie.erase(uczniowie.begin() + i);
+}
+
 std::vector<student> schoolClass::wyswietl()
 {
   return uczniowie;

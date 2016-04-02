@@ -22,6 +22,7 @@ public:
                     std::string pesel );
 
   void usunUcznia( std::string nazwisko );
+  void usunWszystkichUczniow();
   std::vector<student> wyswietl();
 };
 

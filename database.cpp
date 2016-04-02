@@ -28,6 +28,7 @@ void database::wczytaj()
   save.open("save.txt", std::ios::in);
   if(save.good() == true)
   {
+    klasa1A.usunWszystkichUczniow();
     while(!save.eof())
     {
       int nrDziennika = 0;

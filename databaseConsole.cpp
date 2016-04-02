@@ -16,7 +16,7 @@ void databaseConsole::wyswietl()
   system("clear");
 
   cout << "|Nr|Imie      |Nazwisko       |PESEL      |" << endl;
-  cout << "|  |----------|---------------|-----------|" << endl;
+  cout << "|--|----------|---------------|-----------|" << endl;
   for(auto uczen :  klasa1A.wyswietl())
   {
     cout << "|";
