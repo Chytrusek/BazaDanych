@@ -27,6 +27,22 @@ void schoolClass::sortujUczniow()
     uczniowie.at(i).nrDziennika = i+1;
 }
 
+void schoolClass::edytujImieUcznia( int id, std::string wartosc )
+{
+  uczniowie.at(id).imie = wartosc;
+}
+
+void schoolClass::edytujNazwiskoUcznia( int id, std::string wartosc )
+{
+
+  uczniowie.at(id).nazwisko = wartosc;
+}
+
+void schoolClass::edytujPeselUcznia( int id, std::string wartosc )
+{
+  uczniowie.at(id).pesel = wartosc;
+}
+
 void schoolClass::usunUcznia(std::string nazwisko)
 {
   for(unsigned int i=0;i<uczniowie.size();i++)

@@ -21,6 +21,10 @@ public:
                     std::string nazwisko,
                     std::string pesel );
 
+  void edytujImieUcznia( int id, std::string wartosc );
+  void edytujNazwiskoUcznia( int id, std::string wartosc );
+  void edytujPeselUcznia( int id, std::string wartosc );
+
   void usunUcznia( std::string nazwisko );
   void usunWszystkichUczniow();
   std::vector<student> wyswietl();
