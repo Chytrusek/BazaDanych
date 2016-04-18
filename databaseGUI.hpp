@@ -24,6 +24,9 @@ class Aplikacja: public wxApp
       wxTextCtrl *poleImie;
       wxTextCtrl *poleNazwisko;
       wxTextCtrl *polePesel;
+      wxButton *nastepnyRekord;
+      wxButton *poprzedniRekord;
+
       void OnExit(wxCommandEvent& event);
       void Save(wxCommandEvent& event);
       void Load(wxCommandEvent& event);
@@ -33,5 +36,6 @@ class Aplikacja: public wxApp
       void ZmienionoPesel(wxCommandEvent& event);
       void ZmienionoNrDziennika(wxCommandEvent& event);
 
+      void Wyswietl();
       wxDECLARE_EVENT_TABLE();
   };
