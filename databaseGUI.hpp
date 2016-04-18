@@ -20,6 +20,8 @@ class Aplikacja: public wxApp
       wxStaticText *etykietaImie;
       wxStaticText *etykietaNazwisko;
       wxStaticText *etykietaPesel;
+      wxStaticText *licznikRekordow;
+
       wxTextCtrl *poleNrDziennika;
       wxTextCtrl *poleImie;
       wxTextCtrl *poleNazwisko;
@@ -35,6 +37,9 @@ class Aplikacja: public wxApp
       void ZmienionoNazwisko(wxCommandEvent& event);
       void ZmienionoPesel(wxCommandEvent& event);
       void ZmienionoNrDziennika(wxCommandEvent& event);
+
+      void UstawieniePoprzedniegoRekordu(wxCommandEvent& event);
+      void UstawienieNastepnegoRekordu(wxCommandEvent& event);
 
       void Wyswietl();
       wxDECLARE_EVENT_TABLE();

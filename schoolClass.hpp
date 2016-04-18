@@ -15,11 +15,12 @@ class schoolClass
 private:
   std::vector<student> uczniowie;
 
-  void sortujUczniow();
 public:
+  void sortujUczniow();
   void dodajUcznia( std::string imie,
                     std::string nazwisko,
                     std::string pesel );
+  void dodajBlanka();
 
   void edytujImieUcznia( int id, std::string wartosc );
   void edytujNazwiskoUcznia( int id, std::string wartosc );

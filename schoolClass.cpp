@@ -17,6 +17,18 @@ void schoolClass::dodajUcznia(std::string imie,
 
 }
 
+void schoolClass::dodajBlanka()
+{
+  student uczen;
+  uczen.imie = "";
+  uczen.nazwisko = "";
+  uczen.pesel = "";
+  uczniowie.push_back(uczen);
+
+  for(unsigned int i=0;i<uczniowie.size();i++)
+    uczniowie.at(i).nrDziennika = i+1;
+}
+
 void schoolClass::sortujUczniow()
 {
   std::sort(uczniowie.begin(),uczniowie.end(),

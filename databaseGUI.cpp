@@ -41,7 +41,8 @@ Ramka::Ramka(const wxString& tytul, const wxPoint& pozycja,
   CreateStatusBar();
   SetStatusText("Baza Danych - Kamil Mielnik" );
 
-  klasa1A.dodajUcznia("","","");
+  if(klasa1A.wyswietl().size()==0)
+    klasa1A.dodajBlanka();
 
   std::ostringstream strumien;
   strumien << klasa1A.wyswietl().at(ktoryNumer).nrDziennika;
@@ -52,6 +53,7 @@ Ramka::Ramka(const wxString& tytul, const wxPoint& pozycja,
   wxString pesel = klasa1A.wyswietl().at(ktoryNumer).pesel;
 
   etykietaNrDziennika = new wxStaticText(this,wxID_ANY,"Nr Dziennika:",wxPoint(20,15),wxSize(100,-1));
+  licznikRekordow = new wxStaticText(this,wxID_ANY,"Liczba rekordow w bazie: 0",wxPoint(200,15));
   etykietaImie = new wxStaticText(this,wxID_ANY,"Imie:",wxPoint(20,65),wxSize(100,-1));
   etykietaNazwisko = new wxStaticText(this,wxID_ANY,"Nazwisko:",wxPoint(20,115),wxSize(100,-1));
   etykietaPesel = new wxStaticText(this,wxID_ANY,"PESEL:",wxPoint(20,165),wxSize(100,-1));
@@ -94,8 +96,52 @@ void Ramka::ZmienionoPesel(wxCommandEvent& event)
   klasa1A.edytujPeselUcznia(ktoryNumer,std::string(polePesel->GetValue().mb_str()));
 }
 
+void Ramka::UstawieniePoprzedniegoRekordu(wxCommandEvent& event)
+{
+  if(ktoryNumer>0)
+  {
+    if(ktoryNumer+1 == klasa1A.wyswietl().size())
+    {
+      if(poleNazwisko->GetValue().empty() &&
+       poleImie->GetValue().empty() &&
+       polePesel->GetValue().empty())
+        klasa1A.usunUcznia(klasa1A.wyswietl().at(ktoryNumer).nazwisko);
+
+      klasa1A.sortujUczniow();
+    }
+    ktoryNumer--;
+    Wyswietl();
+  }
+  else
+    wxMessageBox( wxT("Jesteś już na pierwszym rekordzie") );
+
+
+}
+
+void Ramka::UstawienieNastepnegoRekordu(wxCommandEvent& event)
+{
+  if(ktoryNumer+1 < klasa1A.wyswietl().size())
+  {
+    ktoryNumer++;
+    Wyswietl();
+  }
+  else
+    if(!poleNazwisko->GetValue().empty() ||
+       !poleImie->GetValue().empty() ||
+       !polePesel->GetValue().empty())
+    {
+      klasa1A.dodajBlanka();
+      ktoryNumer++;
+      Wyswietl();
+    }
+}
+
 void Ramka::Wyswietl()
 {
+  std::ostringstream ileRekordowStrumien;
+  ileRekordowStrumien << "Liczba rekordow w bazie: " << klasa1A.wyswietl().size();
+  wxString ileRekordow = wxString(ileRekordowStrumien.str());
+  licznikRekordow->SetLabel(ileRekordow);
   std::ostringstream strumien;
   strumien << klasa1A.wyswietl().at(ktoryNumer).nrDziennika;
 
@@ -114,6 +160,10 @@ wxBEGIN_EVENT_TABLE(Ramka,wxFrame)
   EVT_MENU(ID_Save, Ramka::Save)
   EVT_MENU(ID_Load, Ramka::Load)
   EVT_TEXT(ID_Imie, Ramka::ZmienionoImie)
+  EVT_TEXT(ID_Nazwisko, Ramka::ZmienionoNazwisko)
+  EVT_TEXT(ID_Pesel, Ramka::ZmienionoPesel)
+  EVT_BUTTON(ID_PoprzedniRekord, Ramka::UstawieniePoprzedniegoRekordu)
+  EVT_BUTTON(ID_NastepnyRekord, Ramka::UstawienieNastepnegoRekordu)
 	wxEND_EVENT_TABLE()
 
 IMPLEMENT_APP_NO_MAIN(Aplikacja);
