@@ -26,7 +26,9 @@ enum
   ID_Pesel = 5,
   ID_NrDziennika = 6,
   ID_NastepnyRekord = 7,
-  ID_PoprzedniRekord = 8
+  ID_PoprzedniRekord = 8,
+  ID_SzukajID = 9,
+  ID_SzukajNazwisko = 10
 };
 Ramka::Ramka(const wxString& tytul, const wxPoint& pozycja,
               const wxSize& rozmiar) : wxFrame(NULL, wxID_ANY, tytul, pozycja, rozmiar)
@@ -34,9 +36,13 @@ Ramka::Ramka(const wxString& tytul, const wxPoint& pozycja,
   wxMenu *Plik = new wxMenu;
   Plik->Append(ID_Save,"Zapisz", "Zapisze baze danych do pliku.");
   Plik->Append(ID_Load,"Wczytaj", "Wczytam baze danych z pliku.");
+  wxMenu *Szukaj = new wxMenu;
+  Szukaj->Append(ID_SzukajID,"Poprzez nr.","Wyszukiwanie rekordu po numerze ucznia w dzienniku");
+  Szukaj->Append(ID_SzukajNazwisko,"Poprzez nazwisko.","Wyszukiwanie rekordu po nazwisku ucznia");
 
   wxMenuBar *menu = new wxMenuBar;
   menu->Append(Plik, "Plik" );
+  menu->Append(Szukaj, "Szukaj" );
   SetMenuBar(menu);
   CreateStatusBar();
   SetStatusText("Baza Danych - Kamil Mielnik" );
