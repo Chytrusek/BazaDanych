@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 schoolClass klasa1A;
 
@@ -79,12 +80,87 @@ void Ramka::OnExit(wxCommandEvent& event)
 
 void Ramka::Save(wxCommandEvent& event)
 {
+  std::fstream save;
+  save.open("save.txt", std::ios::out);
+  if(save.good() == true)
+  {
+    for(auto uczen : klasa1A.wyswietl())
+    {
+      save << uczen.nrDziennika << " ";
+      save << uczen.imie << " ";
+      save << uczen.nazwisko << " ";
+      save << uczen.pesel << std::endl;
+    }
+    save.close();
+  }
   wxMessageBox( wxT("Zapisano") );
 }
 
 void Ramka::Load(wxCommandEvent& event)
 {
+  std::ifstream save;
+  save.open("save.txt", std::ios::in);
+  if(save.good() == true)
+  {
+    klasa1A.usunWszystkichUczniow();
+    while(!save.eof())
+    {
+      int nrDziennika = 0;
+      std::string imie,nazwisko,pesel;
+
+      save >> nrDziennika;
+      save >> imie;
+      save >> nazwisko;
+      save >> pesel;
+
+      if(nrDziennika!=0)
+        klasa1A.dodajUcznia(imie, nazwisko, pesel);
+    }
+  }
+  ktoryNumer = 0;
+  Wyswietl();
   wxMessageBox( wxT("Wczytano") );
+}
+
+void Ramka::SzukajID(wxCommandEvent& event)
+{
+  std::stringstream pytanie;
+  pytanie << "Podaj ktory ID chesz wyswietlic (zakres 1 do "<<klasa1A.wyswietl().size()<<").";
+  wxString pytanieString = pytanie.str();
+
+  wxTextEntryDialog *dialog = new wxTextEntryDialog(this,pytanieString);
+  dialog->ShowModal();
+  std::string odpowiedz = std::string(dialog->GetValue().mb_str());
+  pytanie.str("");
+  pytanie << odpowiedz;
+  int id;
+  pytanie >> id;
+  id--;
+  if(id>=0 && id<=klasa1A.wyswietl().size()-1)
+    ktoryNumer = id;
+  else
+    wxMessageBox( wxT("Niewlasciwy ID"));
+  //ktoryNumer = klasa1A.znajdzUcznia(odpowiedz);
+  Wyswietl();
+
+}
+
+void Ramka::SzukajNazwisko(wxCommandEvent& event)
+{
+  std::stringstream pytanie;
+  pytanie << "Podaj nazwisko szukanej osoby.";
+  wxString pytanieString = pytanie.str();
+
+  wxTextEntryDialog *dialog = new wxTextEntryDialog(this,pytanieString);
+  dialog->ShowModal();
+  std::string odpowiedz = std::string(dialog->GetValue().mb_str());
+  int id;
+  id = klasa1A.znajdzUcznia(odpowiedz);
+  if(id>=0 && id<=klasa1A.wyswietl().size()-1)
+    ktoryNumer = id;
+  else
+    wxMessageBox( wxT("Brak takiej osoby w bazie"));
+  Wyswietl();
 }
 
 void Ramka::ZmienionoImie(wxCommandEvent& event)
@@ -111,7 +187,7 @@ void Ramka::UstawieniePoprzedniegoRekordu(wxCommandEvent& event)
       if(poleNazwisko->GetValue().empty() &&
        poleImie->GetValue().empty() &&
        polePesel->GetValue().empty())
-        klasa1A.usunUcznia(klasa1A.wyswietl().at(ktoryNumer).nazwisko);
+        klasa1A.usunUcznia(ktoryNumer);
 
       klasa1A.sortujUczniow();
     }
@@ -165,6 +241,8 @@ void Ramka::Wyswietl()
 wxBEGIN_EVENT_TABLE(Ramka,wxFrame)
   EVT_MENU(ID_Save, Ramka::Save)
   EVT_MENU(ID_Load, Ramka::Load)
+  EVT_MENU(ID_SzukajID, Ramka::SzukajID)
+  EVT_MENU(ID_SzukajNazwisko, Ramka::SzukajNazwisko)
   EVT_TEXT(ID_Imie, Ramka::ZmienionoImie)
   EVT_TEXT(ID_Nazwisko, Ramka::ZmienionoNazwisko)
   EVT_TEXT(ID_Pesel, Ramka::ZmienionoPesel)

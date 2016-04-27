@@ -32,6 +32,8 @@ class Aplikacja: public wxApp
       void OnExit(wxCommandEvent& event);
       void Save(wxCommandEvent& event);
       void Load(wxCommandEvent& event);
+      void SzukajNazwisko(wxCommandEvent& event);
+      void SzukajID(wxCommandEvent& event);
 
       void ZmienionoImie(wxCommandEvent& event);
       void ZmienionoNazwisko(wxCommandEvent& event);

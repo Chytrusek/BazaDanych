@@ -27,6 +27,8 @@ public:
   void edytujPeselUcznia( int id, std::string wartosc );
 
   void usunUcznia( std::string nazwisko );
+  unsigned int znajdzUcznia( std::string nazwisko );
+  void usunUcznia( int ID );
   void usunWszystkichUczniow();
   std::vector<student> wyswietl();
 };
