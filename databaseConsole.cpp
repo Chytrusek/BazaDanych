@@ -104,9 +104,8 @@ bool databaseConsole::menu()
 #include <unistd.h>
 
 int mygetch( ) {
-  struct termios oldt,
-                 newt;
-  int            ch;
+  struct termios oldt,newt;
+  int ch;
   tcgetattr( STDIN_FILENO, &oldt );
   newt = oldt;
   newt.c_lflag &= ~( ICANON | ECHO );
