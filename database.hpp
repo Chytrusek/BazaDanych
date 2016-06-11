@@ -13,6 +13,7 @@ public:
   void wczytaj();
   virtual void wyswietl() = 0;
   virtual bool menu() = 0;
+  virtual ~database(){}
 
 };
 

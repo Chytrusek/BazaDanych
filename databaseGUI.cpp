@@ -8,13 +8,12 @@
 #include <sstream>
 #include <fstream>
 
-schoolClass klasa1A;
-
+extern schoolClass klasa1A;
 
 bool Aplikacja::OnInit()
 {
-	Ramka *glownaRamka = new Ramka("Baza Danych", wxPoint(50, 50), wxSize(600,600));
-	glownaRamka->Show(true);
+  Ramka *glownaRamka = new Ramka("Baza Danych", wxPoint(50, 50), wxSize(600,600));
+  glownaRamka->Show(true);
   return true;
 }
 
@@ -31,8 +30,9 @@ enum
   ID_SzukajID = 9,
   ID_SzukajNazwisko = 10
 };
+
 Ramka::Ramka(const wxString& tytul, const wxPoint& pozycja,
-              const wxSize& rozmiar) : wxFrame(NULL, wxID_ANY, tytul, pozycja, rozmiar)
+    const wxSize& rozmiar) : wxFrame(NULL, wxID_ANY, tytul, pozycja, rozmiar)
 {
   wxMenu *Plik = new wxMenu;
   Plik->Append(ID_Save,"Zapisz", "Zapisze baze danych do pliku.");
@@ -48,6 +48,7 @@ Ramka::Ramka(const wxString& tytul, const wxPoint& pozycja,
   CreateStatusBar();
   SetStatusText("Baza Danych - Kamil Mielnik" );
 
+  std::cout << klasa1A.wyswietl().size();
   if(klasa1A.wyswietl().size()==0)
     klasa1A.dodajBlanka();
 
@@ -185,8 +186,8 @@ void Ramka::UstawieniePoprzedniegoRekordu(wxCommandEvent& event)
     if(ktoryNumer+1 == klasa1A.wyswietl().size())
     {
       if(poleNazwisko->GetValue().empty() &&
-       poleImie->GetValue().empty() &&
-       polePesel->GetValue().empty())
+          poleImie->GetValue().empty() &&
+          polePesel->GetValue().empty())
         klasa1A.usunUcznia(ktoryNumer);
 
       klasa1A.sortujUczniow();
@@ -209,8 +210,8 @@ void Ramka::UstawienieNastepnegoRekordu(wxCommandEvent& event)
   }
   else
     if(!poleNazwisko->GetValue().empty() ||
-       !poleImie->GetValue().empty() ||
-       !polePesel->GetValue().empty())
+        !poleImie->GetValue().empty() ||
+        !polePesel->GetValue().empty())
     {
       klasa1A.dodajBlanka();
       ktoryNumer++;
@@ -238,7 +239,7 @@ void Ramka::Wyswietl()
   poleNrDziennika->ChangeValue(nrDziennika);
 }
 
-wxBEGIN_EVENT_TABLE(Ramka,wxFrame)
+  wxBEGIN_EVENT_TABLE(Ramka,wxFrame)
   EVT_MENU(ID_Save, Ramka::Save)
   EVT_MENU(ID_Load, Ramka::Load)
   EVT_MENU(ID_SzukajID, Ramka::SzukajID)
@@ -248,6 +249,6 @@ wxBEGIN_EVENT_TABLE(Ramka,wxFrame)
   EVT_TEXT(ID_Pesel, Ramka::ZmienionoPesel)
   EVT_BUTTON(ID_PoprzedniRekord, Ramka::UstawieniePoprzedniegoRekordu)
   EVT_BUTTON(ID_NastepnyRekord, Ramka::UstawienieNastepnegoRekordu)
-	wxEND_EVENT_TABLE()
+wxEND_EVENT_TABLE()
 
-IMPLEMENT_APP_NO_MAIN(Aplikacja);
+  IMPLEMENT_APP_NO_MAIN(Aplikacja);
