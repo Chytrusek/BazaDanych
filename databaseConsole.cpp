@@ -96,7 +96,16 @@ bool databaseConsole::menu()
   return false;
 }
 
+databaseConsole::databaseConsole(schoolClass &globalKlasa1A)
+{
+  klasa1A = globalKlasa1A;
+  pointerKlasa1A = &globalKlasa1A;
+}
 
+databaseConsole::~databaseConsole()
+{
+  *pointerKlasa1A = klasa1A;
+}
 //___________________________________________________________________________//
 
 #include <stdio.h>
@@ -104,9 +113,8 @@ bool databaseConsole::menu()
 #include <unistd.h>
 
 int mygetch( ) {
-  struct termios oldt,
-                 newt;
-  int            ch;
+  struct termios oldt,newt;
+  int ch;
   tcgetattr( STDIN_FILENO, &oldt );
   newt = oldt;
   newt.c_lflag &= ~( ICANON | ECHO );
